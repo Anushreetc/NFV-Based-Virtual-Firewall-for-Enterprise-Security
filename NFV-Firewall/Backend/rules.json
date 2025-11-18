@@ -1,0 +1,69 @@
+{
+    "rules": [
+        {
+            "id": 1,
+            "name": "Allow SSH",
+            "src_ip": "any",
+            "dst_ip": "any",
+            "src_port": "any",
+            "dst_port": "22",
+            "protocol": "tcp",
+            "action": "allow",
+            "priority": 100,
+            "enabled": true,
+            "created_at": "2025-10-21T23:50:45.461914"
+        },
+        {
+            "id": 2,
+            "name": "Allow HTTP",
+            "src_ip": "any",
+            "dst_ip": "any",
+            "src_port": "any",
+            "dst_port": "80",
+            "protocol": "tcp",
+            "action": "allow",
+            "priority": 100,
+            "enabled": true,
+            "created_at": "2025-10-21T23:50:45.461914"
+        },
+        {
+            "id": 3,
+            "name": "Allow HTTPS",
+            "src_ip": "any",
+            "dst_ip": "any",
+            "src_port": "any",
+            "dst_port": "443",
+            "protocol": "tcp",
+            "action": "allow",
+            "priority": 100,
+            "enabled": true,
+            "created_at": "2025-10-21T23:50:45.461914"
+        },
+        {
+            "id": 4,
+            "name": "Block Malicious IP",
+            "src_ip": "192.168.1.100",
+            "dst_ip": "any",
+            "src_port": "any",
+            "dst_port": "any",
+            "protocol": "any",
+            "action": "deny",
+            "priority": 200,
+            "enabled": true,
+            "created_at": "2025-10-21T23:50:45.461914"
+        },
+        {
+            "id": 5,
+            "name": "Default Deny All",
+            "src_ip": "any",
+            "dst_ip": "any",
+            "src_port": "any",
+            "dst_port": "any",
+            "protocol": "any",
+            "action": "deny",
+            "priority": 1,
+            "enabled": true,
+            "created_at": "2025-10-21T23:50:45.461914"
+        }
+    ]
+}

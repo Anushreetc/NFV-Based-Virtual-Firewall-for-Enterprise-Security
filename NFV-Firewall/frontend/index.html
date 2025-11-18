@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME Firewall Manager | Secure Your Network</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">SME</span>
+                        <span class="logo-accent">Firewall</span>
+                        <span class="logo-sub">Manager</span>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-tab="dashboard">
+                            <i class="fas fa-chart-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-tab="firewalls">
+                            <i class="fas fa-fire"></i>
+                            <span>Firewalls</span>
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-tab="deploy">
+                            <i class="fas fa-rocket"></i>
+                            <span>Deploy</span>
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-tab="logs">
+                            <i class="fas fa-terminal"></i>
+                            <span>Logs</span>
+                        </a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <span class="user-name">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Security Dashboard</h1>
+                    <p>Monitor and manage your virtual firewall infrastructure</p>
+                </div>
+                <button class="btn btn-primary btn-icon" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Data
+                </button>
+            </div>
+
+            <!-- Statistics Grid -->
+            <div class="stats-grid" id="statistics">
+                <!-- Statistics will be loaded dynamically -->
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card" data-action="deploy">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Deploy Firewall</h3>
+                        <p>Create new virtual firewall instance</p>
+                    </div>
+                    <div class="action-card" data-action="monitor">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>View Analytics</h3>
+                        <p>Network traffic and threat analysis</p>
+                    </div>
+                    <div class="action-card" data-action="backup">
+                        <div class="action-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Backup Config</h3>
+                        <p>Export firewall configurations</p>
+                    </div>
+                    <div class="action-card" data-action="docs">
+                        <div class="action-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Documentation</h3>
+                        <p>Guides and API references</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Firewalls -->
+            <div class="firewalls-preview">
+                <div class="section-header">
+                    <h2 class="section-title">Active Firewalls</h2>
+                    <a href="#" class="view-all" data-tab="firewalls">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="card-grid" id="dashboardFirewalls">
+                    <!-- Firewall cards will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Firewalls Tab -->
+        <div class="tab-content" id="firewalls">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Firewall Instances</h1>
+                    <p>Manage your virtual firewall deployments</p>
+                </div>
+                <button class="btn btn-primary btn-icon" id="deployFromListBtn">
+                    <i class="fas fa-plus"></i>
+                    Deploy New Firewall
+                </button>
+            </div>
+            <div class="card-grid" id="firewallsList">
+                <!-- Firewall instances will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Deploy Tab -->
+        <div class="tab-content" id="deploy">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Deploy New Firewall</h1>
+                    <p>Create a new virtual firewall instance using OSM+OpenFlow technology stack</p>
+                </div>
+            </div>
+
+            <div class="deploy-container">
+                <div class="deploy-form-container">
+                    <form id="deployForm" class="deploy-form">
+                        <div class="form-section">
+                            <h3><i class="fas fa-cog"></i> Basic Configuration</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fwName">
+                                        <i class="fas fa-tag"></i>
+                                        Firewall Name *
+                                    </label>
+                                    <input type="text" id="fwName" class="form-control" placeholder="e.g., Perimeter-FW-02" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fwType">
+                                        <i class="fas fa-layer-group"></i>
+                                        Firewall Type *
+                                    </label>
+                                    <select id="fwType" class="form-control" required>
+                                        <option value="osm-openflow">OSM + OpenFlow</option>
+                                        <option value="custom">Custom VNF</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-network-wired"></i> Network Configuration</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="managementIP">
+                                        <i class="fas fa-server"></i>
+                                        Management IP *
+                                    </label>
+                                    <input type="text" id="managementIP" class="form-control" placeholder="e.g., 192.168.1.100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subnet">
+                                        <i class="fas fa-sitemap"></i>
+                                        Subnet *
+                                    </label>
+                                    <input type="text" id="subnet" class="form-control" placeholder="e.g., 192.168.1.0/24" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-microchip"></i> Resource Allocation</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="vCPU">
+                                        <i class="fas fa-brain"></i>
+                                        vCPU Cores *
+                                    </label>
+                                    <select id="vCPU" class="form-control" required>
+                                        <option value="1">1 vCPU</option>
+                                        <option value="2" selected>2 vCPU</option>
+                                        <option value="4">4 vCPU</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ram">
+                                        <i class="fas fa-memory"></i>
+                                        RAM (GB) *
+                                    </label>
+                                    <select id="ram" class="form-control" required>
+                                        <option value="2">2 GB</option>
+                                        <option value="4" selected>4 GB</option>
+                                        <option value="8">8 GB</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-shield-alt"></i> Security Policy</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="securityPolicy">
+                                        <i class="fas fa-policy"></i>
+                                        Initial Security Policy *
+                                    </label>
+                                    <select id="securityPolicy" class="form-control" required>
+                                        <option value="default">Default Policy (Block All)</option>
+                                        <option value="web">Web Server Policy</option>
+                                        <option value="database">Database Policy</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="configMethod">
+                                        <i class="fas fa-tools"></i>
+                                        Configuration Method *
+                                    </label>
+                                    <select id="configMethod" class="form-control" required>
+                                        <option value="netconf">NETCONF</option>
+                                        <option value="rest">REST API</option>
+                                        <option value="both">Both (NETCONF + REST)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-lg btn-icon">
+                                <i class="fas fa-rocket"></i>
+                                Deploy Firewall
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i>
+                                Reset Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="deploy-sidebar">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Deployment Info</h3>
+                        <div class="tech-stack">
+                            <h4>Technology Stack</h4>
+                            <div class="tech-badges">
+                                <span class="tech-badge">
+                                    <i class="fas fa-cloud"></i>
+                                    OSM
+                                </span>
+                                <span class="tech-badge">
+                                    <i class="fas fa-project-diagram"></i>
+                                    OpenFlow
+                                </span>
+                                <span class="tech-badge">
+                                    <i class="fas fa-code"></i>
+                                    NETCONF
+                                </span>
+                                <span class="tech-badge">
+                                    <i class="fas fa-plug"></i>
+                                    REST API
+                                </span>
+                            </div>
+                        </div>
+                        <div class="deployment-tips">
+                            <h4>Best Practices</h4>
+                            <ul>
+                                <li>Use descriptive names for easy identification</li>
+                                <li>Start with minimal resources and scale as needed</li>
+                                <li>Choose security policy based on application needs</li>
+                                <li>Regularly monitor firewall performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deployment-progress" id="deploymentProgress">
+                <h3><i class="fas fa-spinner fa-spin"></i> Deployment in Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progressBar"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <span class="step active">OSM Init</span>
+                        <span class="step">VNF Deploy</span>
+                        <span class="step">OpenFlow Config</span>
+                        <span class="step">NETCONF/REST</span>
+                        <span class="step">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs Tab -->
+        <div class="tab-content" id="logs">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>System Logs</h1>
+                    <p>Real-time logs from OSM, OpenFlow, NETCONF and REST API operations</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary btn-icon" id="refreshLogsBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Logs
+                    </button>
+                    <button class="btn btn-secondary btn-icon" id="clearLogsBtn">
+                        <i class="fas fa-trash"></i>
+                        Clear Logs
+                    </button>
+                </div>
+            </div>
+            
+            <div class="logs-container">
+                <div class="logs-header">
+                    <div class="logs-filter">
+                        <span class="filter-label">Filter:</span>
+                        <button class="filter-btn active" data-level="all">All</button>
+                        <button class="filter-btn" data-level="info">
+                            <i class="fas fa-info-circle"></i> Info
+                        </button>
+                        <button class="filter-btn" data-level="success">
+                            <i class="fas fa-check-circle"></i> Success
+                        </button>
+                        <button class="filter-btn" data-level="warning">
+                            <i class="fas fa-exclamation-triangle"></i> Warning
+                        </button>
+                        <button class="filter-btn" data-level="error">
+                            <i class="fas fa-times-circle"></i> Error
+                        </button>
+                    </div>
+                    <div class="logs-stats">
+                        <span id="logCount">0 logs</span>
+                    </div>
+                </div>
+                <div class="logs" id="systemLogs">
+                    <!-- Logs will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-main">SME</span>
+                            <span class="logo-accent">Firewall</span>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Enterprise-grade network security made simple for small and medium businesses.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology Stack</h4>
+                    <ul>
+                        <li>OSM (Open Source MANO)</li>
+                        <li>OpenFlow SDN</li>
+                        <li>NETCONF Protocol</li>
+                        <li>REST API</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SME Security Solutions. All rights reserved.</p>
+                <p>Powered by OSM, OpenFlow, NETCONF & REST API</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
